@@ -1,16 +1,16 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
-import typescriptEslintPlugin from '@typescript-eslint/eslint-plugin';
-import prettierPlugin from 'eslint-plugin-prettier';
+const { FlatCompat } = require('@eslint/eslintrc');
+const typescriptEslintPlugin = require('@typescript-eslint/eslint-plugin');
+const prettierPlugin = require('eslint-plugin-prettier');
+const eslintConfigPrettier = require('eslint-config-prettier');
 
 const compat = new FlatCompat({
-  baseDirectory: import.meta.url,
-  recommendedConfig: js.configs.recommended,
+  baseDirectory: __dirname,
+  recommendedConfig: require('@eslint/js').configs.recommended,
 });
 
-export default [
+module.exports = [
   {
-    ignores: ['node_modules/**', 'dist/**', 'build/**', '/*.js'],
+    ignores: ['node_modules/**', 'dist/**', 'build/**'],
   },
   {
     files: ['**/*.ts'],
@@ -29,4 +29,5 @@ export default [
   ...compat.extends('eslint:recommended'),
   ...compat.extends('plugin:@typescript-eslint/recommended'),
   ...compat.extends('plugin:prettier/recommended'),
+  ...compat.extends(eslintConfigPrettier),
 ];
