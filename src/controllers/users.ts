@@ -1,3 +1,4 @@
+import { hash } from 'bcryptjs';
 import { Request, Response } from 'express';
 import User from '../model/user';
 
@@ -13,10 +14,12 @@ export const registerUser = async (
       return res.status(400).json({ message: 'User already exists' });
     }
 
+    const passwordHash = await hash(password, 8);
+
     const user = await User.create({
       fullName,
       email,
-      password,
+      password: passwordHash,
     });
 
     return res.status(201).json({
