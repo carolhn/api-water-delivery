@@ -1,52 +1,56 @@
 import { compare, hash } from 'bcryptjs';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import asyncHandler from 'express-async-handler';
 import User from '../model/user';
 
-export const registerUser = async (
-  req: Request,
-  res: Response,
-): Promise<Response> => {
-  const { fullName, email, password } = req.body;
-  try {
-    const userExists = await User.findOne({ email });
+export const registerUser = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { email, password, fullName } = req.body;
 
-    if (userExists) {
-      return res.status(400).json({ message: 'User already exists' });
+    try {
+      const userFound = await User.findOne({ email });
+
+      if (userFound) {
+        throw new Error('User already exists');
+      }
+
+      const passwordHash = await hash(password, 8);
+
+      const newUser = await User.create({
+        fullName,
+        email,
+        password: passwordHash,
+      });
+
+      res.status(201).json({
+        status: 'success',
+        message: 'User registered successfully',
+        data: newUser,
+      });
+    } catch (error) {
+      next(error);
     }
+  },
+);
 
-    const passwordHash = await hash(password, 8);
+export const loginUser = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { email, password } = req.body;
 
-    const user = await User.create({
-      fullName,
-      email,
-      password: passwordHash,
-    });
+    try {
+      const userFound = await User.findOne({ email });
 
-    return res.status(201).json({
-      status: 'success',
-      message: 'User created successfully',
-      data: user,
-    });
-  } catch (error) {
-    return res.status(500).json({ message: 'Internal server error', error });
-  }
-};
-
-export const loginUser = async (
-  req: Request,
-  res: Response,
-): Promise<Response> => {
-  const { email, password } = req.body;
-
-  try {
-    const userFound = await User.findOne({ email });
-
-    if (userFound && (await compare(password, userFound.password))) {
-      return res.status(200).json({ message: 'User logged in successfully' });
-    } else {
-      return res.status(400).json({ message: 'Invalid login details' });
+      if (userFound && (await compare(password, userFound.password))) {
+        res.status(200).json({
+          status: 'success',
+          message: 'User logged in successfully',
+          data: userFound,
+        });
+      } else {
+        throw new Error('Invalid login details');
+      }
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    return res.status(500).json({ message: 'Internal server error', error });
-  }
-};
+  },
+);
