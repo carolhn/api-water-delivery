@@ -2,6 +2,7 @@ import { compare, hash } from 'bcryptjs';
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import User from '../model/user';
+import { generateToken } from '../utils/generateToken';
 
 export const registerUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -45,10 +46,34 @@ export const loginUser = asyncHandler(
           status: 'success',
           message: 'User logged in successfully',
           data: userFound,
+          token: generateToken({ id: userFound.id }),
         });
       } else {
         throw new Error('Invalid login details');
       }
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+export const getUserProfile = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const userId = req.body.user.id;
+
+      const user = await User.findById(userId).select('-password');
+
+      if (!user) {
+        res.status(404).json({ message: 'User not found' });
+        return;
+      }
+
+      res.status(200).json({
+        status: 'success',
+        message: 'User profile retrieved successfully',
+        data: user,
+      });
     } catch (error) {
       next(error);
     }
