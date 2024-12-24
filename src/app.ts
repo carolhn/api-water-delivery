@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express from 'express';
-import { handleErrors } from './middlewares/handleErrors';
+import { handleErrors, notFound } from './middlewares/handleErrors';
 import routes from './routes';
 
 const app = express();
@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.use(routes);
 
+app.use(notFound);
 app.use(handleErrors);
 
 export default app;
