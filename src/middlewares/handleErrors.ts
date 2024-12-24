@@ -1,21 +1,29 @@
 import { NextFunction, Request, Response } from 'express';
-import { IAppError } from '../utils/errors';
+
+interface CustomError extends Error {
+  statusCode?: number;
+}
 
 export function handleErrors(
-  error: Error | IAppError,
-  request: Request,
-  response: Response,
+  error: CustomError,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ): void {
-  if ('statusCode' in error) {
-    response.status(error.statusCode).json({
-      status: 'error',
-      message: error.message,
-    });
-  } else {
-    response.status(500).json({
-      status: 'error',
-      message: 'Internal server error',
-    });
-  }
+  const statusCode = error.statusCode || 500;
+  const message = error.message;
+
+  res.status(statusCode).json({
+    message,
+    statusCode,
+  });
+}
+
+export function notFound(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): void {
+  const err = new Error(`Not Found - ${req.originalUrl}`);
+  next(err);
 }
