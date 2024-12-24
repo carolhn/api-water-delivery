@@ -36,3 +36,19 @@ export const createProduct = asyncHandler(
     }
   },
 );
+
+export const getProducts = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const products = await Product.find({});
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Products fetched successfully',
+        products,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
