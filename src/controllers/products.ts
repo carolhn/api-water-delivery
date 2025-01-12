@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import Product from '../model/product';
+import { paginate } from '../utils/pagination';
 
 export const createProduct = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -63,12 +64,22 @@ export const getProducts = asyncHandler(
         };
       }
 
-      const products = await Product.find(query);
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 8;
+
+      const { pagination, query: paginatedQuery } = await paginate(
+        Product.find(query),
+        page,
+        limit,
+      );
+
+      const products = await paginatedQuery.exec();
 
       res.status(200).json({
         status: 'success',
         message: 'Products fetched successfully',
         products,
+        pagination,
       });
     } catch (error) {
       next(error);
