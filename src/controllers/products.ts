@@ -106,3 +106,40 @@ export const getProductById = asyncHandler(
     }
   },
 );
+
+export const updateProduct = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { name, description, category, user, price, totalQuantity, brand } =
+        req.body;
+
+      const userId = req.body.user.id;
+
+      const updateFieldsProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        {
+          name,
+          description,
+          category,
+          user: userId,
+          price,
+          totalQuantity,
+          brand,
+        },
+        { new: true },
+      );
+
+      if (!updateFieldsProduct) {
+        throw new Error('Product not found');
+      }
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Product updated successfully',
+        updateFieldsProduct,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
