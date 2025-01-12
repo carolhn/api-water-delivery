@@ -54,6 +54,12 @@ export const getProducts = asyncHandler(
         });
       }
 
+      if (req.query.category) {
+        products = await Product.find({
+          category: { $regex: req.query.category as string, $options: 'i' },
+        });
+      }
+
       products = await Product.find({});
 
       res.status(200).json({
