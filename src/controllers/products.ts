@@ -46,9 +46,15 @@ export const getProducts = asyncHandler(
         products = await Product.find({
           name: { $regex: req.query.name as string, $options: 'i' },
         });
-      } else {
-        products = await Product.find({});
       }
+
+      if (req.query.brand) {
+        products = await Product.find({
+          brand: { $regex: req.query.brand as string, $options: 'i' },
+        });
+      }
+
+      products = await Product.find({});
 
       res.status(200).json({
         status: 'success',
