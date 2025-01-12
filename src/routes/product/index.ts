@@ -4,7 +4,7 @@ import { isAuthenticated } from '../../middlewares/auth';
 
 const productRoutes = Router();
 
-productRoutes.post('/', isAuthenticated, createProduct as any);
-productRoutes.get('/', getProducts as any);
+productRoutes.post('/create', isAuthenticated, createProduct as any);
+productRoutes.get('/list', getProducts as any);
 
 export default productRoutes;
