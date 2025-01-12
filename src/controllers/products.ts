@@ -40,7 +40,30 @@ export const createProduct = asyncHandler(
 export const getProducts = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const products = await Product.find({});
+      const query: any = {};
+
+      if (req.query.name) {
+        query.name = { $regex: req.query.name as string, $options: 'i' };
+      }
+      if (req.query.brand) {
+        query.brand = { $regex: req.query.brand as string, $options: 'i' };
+      }
+      if (req.query.category) {
+        query.category = {
+          $regex: req.query.category as string,
+          $options: 'i',
+        };
+      }
+      if (req.query.price) {
+        const price = req.query.price as string;
+        const priceRange = price.split('-');
+        query.price = {
+          $gte: parseFloat(priceRange[0]),
+          $lte: parseFloat(priceRange[1]),
+        };
+      }
+
+      const products = await Product.find(query);
 
       res.status(200).json({
         status: 'success',
