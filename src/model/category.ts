@@ -14,11 +14,9 @@ const CategorySchema = new Schema<ICategoryModel>(
     image: {
       type: String,
       default: '',
-      required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: 'User',
     },
     products: [
