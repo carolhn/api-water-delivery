@@ -47,3 +47,25 @@ export const getAllCategories = asyncHandler(
     }
   },
 );
+
+export const getCategoryById = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    try {
+      const category = await Category.findById(id);
+
+      if (!category) {
+        throw new Error('Category not found');
+      }
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Category fetched successfully',
+        category,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
