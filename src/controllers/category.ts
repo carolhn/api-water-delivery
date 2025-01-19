@@ -4,7 +4,7 @@ import Category from '../model/category';
 
 export const createCategory = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { name, user } = req.body;
+    const { name } = req.body;
 
     try {
       const categoryFound = await Category.findOne({ name });
@@ -22,7 +22,7 @@ export const createCategory = asyncHandler(
 
       res.status(201).json({
         status: 'success',
-        message: 'Category created successfully',
+        message: `Category ${name} created successfully`,
         newCategory,
       });
     } catch (error) {
@@ -35,7 +35,6 @@ export const getAllCategories = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const categories = await Category.find();
-      console.log('getAllCategories', categories);
 
       res.status(200).json({
         status: 'success',
@@ -49,7 +48,7 @@ export const getAllCategories = asyncHandler(
 );
 
 export const getCategoryById = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { id } = req.params;
 
     try {
@@ -71,7 +70,7 @@ export const getCategoryById = asyncHandler(
 );
 
 export const updateCategory = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { name } = req.body;
 
     try {
@@ -87,7 +86,7 @@ export const updateCategory = asyncHandler(
 
       res.status(200).json({
         status: 'success',
-        message: 'Category updated successfully',
+        message: `Category ${name} updated successfully`,
         category,
       });
     } catch (error) {
@@ -107,7 +106,7 @@ export const deleteCategory = asyncHandler(
 
       res.status(200).json({
         status: 'success',
-        message: 'Category deleted successfully',
+        message: `Category ${deleteCategory.name} deleted successfully`,
       });
     } catch (error) {
       next(error);
