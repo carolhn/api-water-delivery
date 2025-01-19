@@ -4,7 +4,7 @@ import Category from '../model/category';
 
 export const createCategory = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { name } = req.body;
+    const { name, user } = req.body;
 
     try {
       const categoryFound = await Category.findOne({ name });
@@ -13,8 +13,11 @@ export const createCategory = asyncHandler(
         throw new Error('Category already exists');
       }
 
+      const userId = req.body.user.id;
+
       const newCategory = await Category.create({
         name,
+        user: userId,
       });
 
       res.status(201).json({
