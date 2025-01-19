@@ -1,8 +1,8 @@
 import { compare, hash } from 'bcryptjs';
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import User from '../model/user';
-import { generateToken } from '../utils/generateToken';
+import { User } from '../../model/index';
+import { generateToken } from '../../utils/generateToken';
 
 export const registerUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {

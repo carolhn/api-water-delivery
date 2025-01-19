@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { Schema } from 'mongoose';
-import Brand from '../model/brand';
-import Category from '../model/category';
-import Product from '../model/product';
-import { paginate } from '../utils/pagination';
+import { Brand, Category, Product } from '../../model/index';
+import { paginate } from '../../utils/pagination';
 
 export const createProduct = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {

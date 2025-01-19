@@ -1,29 +1,29 @@
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import Brand from '../model/brand';
+import { Category } from '../../model/index';
 
-export const createBrand = asyncHandler(
+export const createCategory = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { name } = req.body;
 
     try {
-      const brandFound = await Brand.findOne({ name });
+      const categoryFound = await Category.findOne({ name });
 
-      if (brandFound) {
-        throw new Error('Brand already exists');
+      if (categoryFound) {
+        throw new Error('Category already exists');
       }
 
       const userId = req.body.user.id;
 
-      const newBrand = await Brand.create({
+      const newCategory = await Category.create({
         name: name.toLowerCase(),
         user: userId,
       });
 
       res.status(201).json({
         status: 'success',
-        message: `Brand ${name} created successfully`,
-        newBrand,
+        message: `Category ${name} created successfully`,
+        newCategory,
       });
     } catch (error) {
       next(error);
@@ -31,15 +31,15 @@ export const createBrand = asyncHandler(
   },
 );
 
-export const getAllBrands = asyncHandler(
+export const getAllCategories = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const brands = await Brand.find();
+      const categories = await Category.find();
 
       res.status(200).json({
         status: 'success',
-        message: 'Brands fetched successfully',
-        brands,
+        message: 'Categories fetched successfully',
+        categories,
       });
     } catch (error) {
       next(error);
@@ -47,21 +47,21 @@ export const getAllBrands = asyncHandler(
   },
 );
 
-export const getBrandById = asyncHandler(
+export const getCategoryById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { id } = req.params;
 
     try {
-      const brand = await Brand.findById(id);
+      const category = await Category.findById(id);
 
-      if (!brand) {
-        throw new Error('Brand not found');
+      if (!category) {
+        throw new Error('Category not found');
       }
 
       res.status(200).json({
         status: 'success',
-        message: 'Brand fetched successfully',
-        brand,
+        message: 'Category fetched successfully',
+        category,
       });
     } catch (error) {
       next(error);
@@ -69,25 +69,25 @@ export const getBrandById = asyncHandler(
   },
 );
 
-export const updateBrand = asyncHandler(
+export const updateCategory = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { name } = req.body;
 
     try {
-      const brand = await Brand.findByIdAndUpdate(
+      const category = await Category.findByIdAndUpdate(
         req.params.id,
         { name },
         { new: true },
       );
 
-      if (!brand) {
-        throw new Error('Brand not found');
+      if (!category) {
+        throw new Error('Category not found');
       }
 
       res.status(200).json({
         status: 'success',
-        message: `Brand ${name} updated successfully`,
-        brand,
+        message: `Category ${name} updated successfully`,
+        category,
       });
     } catch (error) {
       next(error);
@@ -95,18 +95,18 @@ export const updateBrand = asyncHandler(
   },
 );
 
-export const deleteBrand = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const deleteCategory = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const deleteBrand = await Brand.findByIdAndDelete(req.params.id);
+      const deleteCategory = await Category.findByIdAndDelete(req.params.id);
 
-      if (!deleteBrand) {
-        throw new Error('Brand not found');
+      if (!deleteCategory) {
+        throw new Error('Category not found');
       }
 
       res.status(200).json({
         status: 'success',
-        message: `Brand ${deleteBrand.name} deleted successfully`,
+        message: `Category ${deleteCategory.name} deleted successfully`,
       });
     } catch (error) {
       next(error);
