@@ -30,3 +30,19 @@ export const createBrand = asyncHandler(
     }
   },
 );
+
+export const getAllBrands = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const brands = await Brand.find();
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Brands fetched successfully',
+        brands,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
