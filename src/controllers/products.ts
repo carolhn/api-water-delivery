@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
+import { Schema } from 'mongoose';
+import Category from '../model/category';
 import Product from '../model/product';
 import { paginate } from '../utils/pagination';
 
@@ -15,6 +17,14 @@ export const createProduct = asyncHandler(
         throw new Error('Product already exists');
       }
 
+      const categoryFound = await Category.findOne({ name: category });
+
+      if (!categoryFound) {
+        throw new Error(
+          'Category not found, please create category first ou check category name',
+        );
+      }
+
       const userId = req.body.user.id;
 
       const newProduct = await Product.create({
@@ -26,6 +36,12 @@ export const createProduct = asyncHandler(
         brand,
         totalQuantity,
       });
+
+      categoryFound.products.push(
+        newProduct._id as any as Schema.Types.ObjectId,
+      );
+
+      await categoryFound.save();
 
       res.status(201).json({
         status: 'success',
