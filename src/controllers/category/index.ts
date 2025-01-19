@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
-import Category from '../model/category';
+import { Category } from '../../model/index';
 
 export const createCategory = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {

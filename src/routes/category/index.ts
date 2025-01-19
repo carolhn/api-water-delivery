@@ -5,7 +5,7 @@ import {
   getAllCategories,
   getCategoryById,
   updateCategory,
-} from '../../controllers/category';
+} from '../../controllers/index';
 import { isAuthenticated } from '../../middlewares/auth';
 
 const categoryRoutes = Router();

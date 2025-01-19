@@ -3,7 +3,7 @@ import {
   getUserProfile,
   loginUser,
   registerUser,
-} from '../../controllers/users';
+} from '../../controllers/index';
 import { isAuthenticated } from '../../middlewares/auth';
 
 const userRoutes = Router();

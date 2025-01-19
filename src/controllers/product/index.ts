@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { Schema } from 'mongoose';
-import Category from '../model/category';
-import Product from '../model/product';
-import { paginate } from '../utils/pagination';
+import { Brand, Category, Product } from '../../model/index';
+import { paginate } from '../../utils/pagination';
 
 export const createProduct = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -12,26 +11,29 @@ export const createProduct = asyncHandler(
 
     try {
       const productsExists = await Product.findOne({ name });
-
       if (productsExists) {
         throw new Error('Product already exists');
       }
 
       const categoryFound = await Category.findOne({ name: category });
-
       if (!categoryFound) {
         throw new Error(
           'Category not found, please create category first ou check category name',
         );
       }
 
-      const userId = req.body.user.id;
+      const brandFound = await Brand.findOne({ name: brand });
+      if (!brandFound) {
+        throw new Error(
+          'Brand not found, please create brand first or check brand name',
+        );
+      }
 
       const newProduct = await Product.create({
         name,
         description,
         category,
-        user: userId,
+        user: req.body.user.id,
         price,
         brand,
         totalQuantity,
@@ -41,7 +43,10 @@ export const createProduct = asyncHandler(
         newProduct._id as any as Schema.Types.ObjectId,
       );
 
+      brandFound.products.push(newProduct._id as any as Schema.Types.ObjectId);
+
       await categoryFound.save();
+      await brandFound.save();
 
       res.status(201).json({
         status: 'success',
