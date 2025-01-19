@@ -46,3 +46,25 @@ export const getAllBrands = asyncHandler(
     }
   },
 );
+
+export const getBrandById = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+
+    try {
+      const brand = await Brand.findById(id);
+
+      if (!brand) {
+        throw new Error('Brand not found');
+      }
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Brand fetched successfully',
+        brand,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
