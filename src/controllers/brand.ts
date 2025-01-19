@@ -68,3 +68,29 @@ export const getBrandById = asyncHandler(
     }
   },
 );
+
+export const updateBrand = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { name } = req.body;
+
+    try {
+      const brand = await Brand.findByIdAndUpdate(
+        req.params.id,
+        { name },
+        { new: true },
+      );
+
+      if (!brand) {
+        throw new Error('Brand not found');
+      }
+
+      res.status(200).json({
+        status: 'success',
+        message: `Brand ${name} updated successfully`,
+        brand,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
