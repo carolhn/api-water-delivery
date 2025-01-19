@@ -6,7 +6,7 @@ import {
   getAllBrands,
   getBrandById,
   updateBrand,
-} from '../../controllers/brand';
+} from '../../controllers/index';
 import { isAuthenticated } from '../../middlewares/auth';
 
 const brandRoutes = Router();

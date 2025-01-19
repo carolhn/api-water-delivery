@@ -5,7 +5,7 @@ import {
   getProductById,
   getProducts,
   updateProduct,
-} from '../../controllers/products';
+} from '../../controllers/index';
 import { isAuthenticated } from '../../middlewares/auth';
 
 const productRoutes = Router();
