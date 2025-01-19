@@ -25,6 +25,6 @@ export function isAuthenticated(
 
     return next();
   } catch (error) {
-    throw new Error('Invalid JWT token');
+    res.status(401).json({ message: 'Invalid JWT token' });
   }
 }
