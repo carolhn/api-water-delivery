@@ -30,3 +30,20 @@ export const createCategory = asyncHandler(
     }
   },
 );
+
+export const getAllCategories = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const categories = await Category.find();
+      console.log('getAllCategories', categories);
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Categories fetched successfully',
+        categories,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
