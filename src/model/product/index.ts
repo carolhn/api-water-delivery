@@ -18,6 +18,7 @@ const ProductSchema = new Schema<IPoductModel>(
     brand: {
       type: String,
       required: true,
+      ref: 'Brand',
     },
     category: {
       type: String,
