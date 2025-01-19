@@ -69,3 +69,29 @@ export const getCategoryById = asyncHandler(
     }
   },
 );
+
+export const updateCategory = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { name } = req.body;
+
+    try {
+      const category = await Category.findByIdAndUpdate(
+        req.params.id,
+        { name },
+        { new: true },
+      );
+
+      if (!category) {
+        throw new Error('Category not found');
+      }
+
+      res.status(200).json({
+        status: 'success',
+        message: 'Category updated successfully',
+        category,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
