@@ -3,9 +3,7 @@ import { IBrand } from 'src/types/brand';
 
 const Schema = mongoose.Schema;
 
-interface IBrandModel extends IBrand {}
-
-const BrandSchema = new Schema<IBrandModel>(
+const BrandSchema = new Schema<IBrand>(
   {
     name: {
       type: String,
@@ -28,6 +26,6 @@ const BrandSchema = new Schema<IBrandModel>(
   },
 );
 
-const Category = mongoose.model<IBrandModel>('Brand', BrandSchema);
+const Category = mongoose.model<IBrand>('Brand', BrandSchema);
 
 export default Category;
