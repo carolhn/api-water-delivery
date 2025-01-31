@@ -111,7 +111,7 @@ export const getProducts = asyncHandler(
 export const getProductById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const product = await Product.findById(req.params.id);
+      const product = await Product.findById(req.params.id).populate('reviews');
 
       if (!product) {
         throw new Error('Product not found');
