@@ -94,7 +94,7 @@ export const getProducts = asyncHandler(
         limit,
       );
 
-      const products = await paginatedQuery.exec();
+      const products = await paginatedQuery.populate('reviews').exec();
 
       res.status(200).json({
         status: 'success',

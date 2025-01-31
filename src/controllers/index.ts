@@ -21,10 +21,13 @@ import {
 } from './product';
 import { getUserProfile, loginUser, registerUser } from './user';
 
+import { createReview } from './review';
+
 export {
   createBrand,
   createCategory,
   createProduct,
+  createReview,
   deleteBrand,
   deleteCategory,
   deleteProduct,
