@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
-export interface IBrand {
+export interface IBrand extends Document {
   name: string;
-  user: mongoose.Schema.Types.ObjectId;
-  products: mongoose.Schema.Types.ObjectId[];
+  user: Schema.Types.ObjectId;
+  products: Schema.Types.ObjectId[];
 }

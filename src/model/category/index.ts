@@ -3,9 +3,7 @@ import { ICategory } from 'src/types/category';
 
 const Schema = mongoose.Schema;
 
-interface ICategoryModel extends ICategory {}
-
-const CategorySchema = new Schema<ICategoryModel>(
+const CategorySchema = new Schema<ICategory>(
   {
     name: {
       type: String,
@@ -32,6 +30,6 @@ const CategorySchema = new Schema<ICategoryModel>(
   },
 );
 
-const Category = mongoose.model<ICategoryModel>('Category', CategorySchema);
+const Category = mongoose.model<ICategory>('Category', CategorySchema);
 
 export default Category;
