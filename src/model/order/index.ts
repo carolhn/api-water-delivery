@@ -1,0 +1,55 @@
+import mongoose from 'mongoose';
+
+const Schema = mongoose.Schema;
+
+const randomTxt = Math.random().toString(36).substring(7);
+const randomNumbers = Math.floor(1000 + Math.random() * 9000);
+
+const OrderSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    orderItens: [
+      {
+        type: Object,
+        required: true,
+      },
+    ],
+    shippingAddress: {
+      type: Object,
+      required: true,
+    },
+    orderNumber: {
+      type: String,
+      default: randomTxt + randomNumbers,
+    },
+    paymentStatus: {
+      type: String,
+      default: 'Not Paid',
+    },
+    paymentMethod: {
+      type: String,
+      default: 'Not specified',
+    },
+    currency: {
+      type: String,
+      default: 'Not specified',
+    },
+    status: {
+      type: String,
+      default: 'Pending',
+      enum: ['Pending', 'Processing', 'Shipped', 'Delivered'],
+    },
+    delivereAt: {
+      type: Date,
+    },
+  },
+  { timestamps: true },
+);
+
+const Order = mongoose.model('Order', OrderSchema);
+
+export default Order;
