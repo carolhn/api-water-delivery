@@ -1,11 +1,12 @@
 import mongoose from 'mongoose';
+import { IOrder } from 'src/types/order';
 
 const Schema = mongoose.Schema;
 
 const randomTxt = Math.random().toString(36).substring(7);
 const randomNumbers = Math.floor(1000 + Math.random() * 9000);
 
-const OrderSchema = new Schema(
+const OrderSchema = new Schema<IOrder>(
   {
     user: {
       type: Schema.Types.ObjectId,
@@ -50,6 +51,6 @@ const OrderSchema = new Schema(
   { timestamps: true },
 );
 
-const Order = mongoose.model('Order', OrderSchema);
+const Order = mongoose.model<IOrder>('Order', OrderSchema);
 
 export default Order;
