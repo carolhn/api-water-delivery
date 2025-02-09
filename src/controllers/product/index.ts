@@ -43,7 +43,7 @@ export const createProduct = asyncHandler(
         newProduct._id as any as Schema.Types.ObjectId,
       );
 
-      brandFound.products.push(newProduct._id as any as Schema.Types.ObjectId);
+      brandFound.products.push(newProduct._id as any);
 
       await categoryFound.save();
       await brandFound.save();

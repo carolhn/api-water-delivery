@@ -3,9 +3,9 @@ import { IProduct } from 'src/types/product';
 
 const Schema = mongoose.Schema;
 
-interface IPoductModel extends IProduct {}
+interface IProductModel extends IProduct {}
 
-const ProductSchema = new Schema<IPoductModel>(
+const ProductSchema = new Schema<IProductModel>(
   {
     name: {
       type: String,
@@ -63,12 +63,16 @@ const ProductSchema = new Schema<IPoductModel>(
     toJSON: { virtuals: true },
   },
 );
-ProductSchema.virtual('totalReviews').get(function (this: IPoductModel) {
-  const product = this;
-  return product?.reviews?.length;
+
+ProductSchema.virtual('quantityLeft').get(function (this: IProductModel) {
+  return Math.max(0, this.totalQuantity - this.totalSold);
 });
 
-ProductSchema.virtual('averageRating').get(function (this: IPoductModel) {
+ProductSchema.virtual('totalReviews').get(function (this: IProductModel) {
+  return this.reviews.length;
+});
+
+ProductSchema.virtual('averageRating').get(function (this: IProductModel) {
   if (!this.reviews || this.reviews.length === 0) return 0;
 
   const ratingTotal = this.reviews.reduce(
@@ -79,6 +83,6 @@ ProductSchema.virtual('averageRating').get(function (this: IPoductModel) {
   return Number((ratingTotal / this.reviews.length).toFixed(1));
 });
 
-const Product = mongoose.model<IPoductModel>('Product', ProductSchema);
+const Product = mongoose.model<IProductModel>('Product', ProductSchema);
 
 export default Product;

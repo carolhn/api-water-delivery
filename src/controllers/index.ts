@@ -19,13 +19,21 @@ import {
   getProducts,
   updateProduct,
 } from './product';
-import { getUserProfile, loginUser, registerUser } from './user';
+import {
+  getUserProfile,
+  loginUser,
+  registerUser,
+  updateShippingAddress,
+} from './user';
 
 import { createReview } from './review';
+
+import { createOrder } from './order';
 
 export {
   createBrand,
   createCategory,
+  createOrder,
   createProduct,
   createReview,
   deleteBrand,
@@ -43,4 +51,5 @@ export {
   updateBrand,
   updateCategory,
   updateProduct,
+  updateShippingAddress,
 };
