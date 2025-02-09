@@ -8,6 +8,10 @@ export const createOrder = asyncHandler(
 
     const user = await User.findById(req.body.user.id);
 
+    if (!user?.isShippingAddress) {
+      throw new Error('Please provide Shipping address');
+    }
+
     if (!orderItems || orderItems.length <= 0) {
       throw new Error('No order items');
     }
