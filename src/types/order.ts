@@ -2,7 +2,7 @@ import { Document, Schema } from 'mongoose';
 
 export interface IOrder extends Document {
   user: Schema.Types.ObjectId;
-  orderItens: Object[];
+  orderItems: Object[];
   shippingAddress: Object;
   orderNumber: string;
   paymentStatus: string;
