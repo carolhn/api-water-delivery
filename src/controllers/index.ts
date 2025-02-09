@@ -23,9 +23,12 @@ import { getUserProfile, loginUser, registerUser } from './user';
 
 import { createReview } from './review';
 
+import { createOrder } from './order';
+
 export {
   createBrand,
   createCategory,
+  createOrder,
   createProduct,
   createReview,
   deleteBrand,

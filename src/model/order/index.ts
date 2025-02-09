@@ -13,7 +13,7 @@ const OrderSchema = new Schema<IOrder>(
       ref: 'User',
       required: true,
     },
-    orderItens: [
+    orderItems: [
       {
         type: Object,
         required: true,
