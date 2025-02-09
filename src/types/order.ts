@@ -7,6 +7,7 @@ export interface IOrder extends Document {
   orderNumber: string;
   paymentStatus: string;
   paymentMethod: string;
+  totalPrice: number;
   currency: string;
   status: string;
   delivereAt: Date;

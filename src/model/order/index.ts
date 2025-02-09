@@ -35,6 +35,11 @@ const OrderSchema = new Schema<IOrder>(
       type: String,
       default: 'Not specified',
     },
+    totalPrice: {
+      type: Number,
+      required: true,
+      default: 0.0,
+    },
     currency: {
       type: String,
       default: 'Not specified',
