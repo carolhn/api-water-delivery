@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { Order, Product, User } from '../../model/index';
+import { createPaymentSession } from '../../utils/createPaymentSession';
 
 export const createOrder = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
@@ -41,6 +42,9 @@ export const createOrder = asyncHandler(
 
     user?.orders.push(newOrder._id as string);
     await user?.save();
+
+    const sessionUrl = await createPaymentSession(orderItems);
+    res.send({ url: sessionUrl });
 
     res.status(201).json({
       status: 'success',
