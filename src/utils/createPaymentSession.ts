@@ -10,12 +10,12 @@ export const createPaymentSession = async (orderItems: any[]) => {
         price_data: {
           currency: 'brl',
           product_data: {
-            name: item.name,
+            name: item?.name,
             description: item?.description,
           },
           unit_amount: item.price * 100,
         },
-        quantity: item.quantity,
+        quantity: item?.quantity,
       };
     },
   );
@@ -24,6 +24,9 @@ export const createPaymentSession = async (orderItems: any[]) => {
 
   const session = await stripeKey.checkout.sessions.create({
     line_items: converterOrders,
+    metadata: {
+      orderItems: JSON.stringify(orderItems),
+    },
     mode: 'payment',
     payment_method_types: ['card'],
     success_url: 'http://localhost:3000/success',

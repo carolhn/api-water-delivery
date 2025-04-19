@@ -28,7 +28,7 @@ import {
 
 import { createReview } from './review';
 
-import { createOrder } from './order';
+import { createOrder, getAllOrders } from './order';
 
 export {
   createBrand,
@@ -41,6 +41,7 @@ export {
   deleteProduct,
   getAllBrands,
   getAllCategories,
+  getAllOrders,
   getBrandById,
   getCategoryById,
   getProductById,
