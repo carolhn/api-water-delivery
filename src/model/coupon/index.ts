@@ -31,6 +31,38 @@ const CouponSchema = new Schema<ICoupon>(
   { timestamps: true },
 );
 
+CouponSchema.virtual('isExpired').get(function () {
+  return this.endDate.getTime() < Date.now();
+});
+
+CouponSchema.pre('validate', function (next) {
+  if (this.endDate < this.startDate) {
+    next(new Error('End date cannot be less than the start date'));
+  }
+  next();
+});
+
+CouponSchema.pre('validate', function (next) {
+  if (this.startDate.getTime() < Date.now()) {
+    next(new Error('Start date cannot be less than today'));
+  }
+  next();
+});
+
+CouponSchema.pre('validate', function (next) {
+  if (this.endDate.getTime() < Date.now()) {
+    next(new Error('End Date date cannot be less than today'));
+  }
+  next();
+});
+
+CouponSchema.pre('validate', function (next) {
+  if (this.discount < 0 || this.discount > 100) {
+    next(new Error('Discount cannot be less than 0 or greater than 100'));
+  }
+  next();
+});
+
 const Coupon = mongoose.model<ICoupon>('Coupon', CouponSchema);
 
 export default Coupon;
