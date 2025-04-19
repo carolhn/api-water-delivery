@@ -35,7 +35,13 @@ import {
   updatedOrder,
 } from './order';
 
-import { createCoupon, getAllCoupons } from './coupons';
+import {
+  createCoupon,
+  deleteCoupon,
+  getAllCoupons,
+  getSingleCoupon,
+  updatedCoupon,
+} from './coupons';
 
 export {
   createBrand,
@@ -46,6 +52,7 @@ export {
   createReview,
   deleteBrand,
   deleteCategory,
+  deleteCoupon,
   deleteProduct,
   getAllBrands,
   getAllCategories,
@@ -55,12 +62,14 @@ export {
   getCategoryById,
   getProductById,
   getProducts,
+  getSingleCoupon,
   getSingleOrder,
   getUserProfile,
   loginUser,
   registerUser,
   updateBrand,
   updateCategory,
+  updatedCoupon,
   updatedOrder,
   updateProduct,
   updateShippingAddress,
