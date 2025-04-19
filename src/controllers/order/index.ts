@@ -79,3 +79,22 @@ export const getSingleOrder = asyncHandler(
     });
   },
 );
+
+export const updatedOrder = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const updatedOrders = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true },
+    );
+
+    res.status(200).json({
+      status: 'success',
+      message: `Order updated successfully`,
+      updatedOrders,
+    });
+  },
+);
