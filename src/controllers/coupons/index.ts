@@ -58,3 +58,47 @@ export const getSingleCoupon = asyncHandler(
     });
   },
 );
+
+export const updatedCoupon = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+    const { code, discount, endDate, startDate } = req.body;
+
+    const couponExists = await Coupon.findOne({
+      code,
+    });
+
+    if (couponExists) {
+      throw new Error('Product already exists');
+    }
+
+    const updatedCoupon = await Coupon.findByIdAndUpdate(
+      id,
+      {
+        code: code?.toUpperCase(),
+        startDate,
+        endDate,
+        discount,
+      },
+      { new: true },
+    );
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Coupon updated successfully',
+      updatedCoupon,
+    });
+  },
+);
+
+export const deleteCoupon = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+    await Coupon.findByIdAndDelete(id);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Coupon deleted successfully',
+    });
+  },
+);
