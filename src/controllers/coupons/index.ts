@@ -33,3 +33,15 @@ export const createCoupon = asyncHandler(
     });
   },
 );
+
+export const getAllCoupons = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const coupons = await Coupon.find();
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Coupons fetched successfully',
+      coupons,
+    });
+  },
+);

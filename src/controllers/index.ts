@@ -35,7 +35,7 @@ import {
   updatedOrder,
 } from './order';
 
-import { createCoupon } from './coupons';
+import { createCoupon, getAllCoupons } from './coupons';
 
 export {
   createBrand,
@@ -49,6 +49,7 @@ export {
   deleteProduct,
   getAllBrands,
   getAllCategories,
+  getAllCoupons,
   getAllOrders,
   getBrandById,
   getCategoryById,
