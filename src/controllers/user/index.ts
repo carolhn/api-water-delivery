@@ -62,7 +62,9 @@ export const getUserProfile = asyncHandler(
     try {
       const userId = req.body.user.id;
 
-      const user = await User.findById(userId).select('-password');
+      const user = await User.findById(userId)
+        .select('-password')
+        .populate('orders');
 
       if (!user) {
         res.status(404).json({ message: 'User not found' });
@@ -72,7 +74,7 @@ export const getUserProfile = asyncHandler(
       res.status(200).json({
         status: 'success',
         message: 'User profile retrieved successfully',
-        data: user,
+        user,
       });
     } catch (error) {
       next(error);

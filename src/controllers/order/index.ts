@@ -33,6 +33,7 @@ export const createOrder = asyncHandler(
         const productOrder = products.find(product => {
           return product._id.toString() === orderItem._id.toString();
         });
+
         if (productOrder) {
           productOrder.totalSold += orderItem.quantity;
           await productOrder.save();
@@ -51,6 +52,49 @@ export const createOrder = asyncHandler(
       message: `Order created successfully`,
       orderItems,
       user,
+    });
+  },
+);
+
+export const getAllOrders = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const orders = await Order.find();
+    res.status(200).json({
+      status: 'success',
+      message: `Orders fetched successfully`,
+      orders,
+    });
+  },
+);
+
+export const getSingleOrder = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+    const order = await Order.findById(id);
+
+    res.status(200).json({
+      status: 'success',
+      message: `Order fetched successfully`,
+      order,
+    });
+  },
+);
+
+export const updatedOrder = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    const updatedOrders = await Order.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true },
+    );
+
+    res.status(200).json({
+      status: 'success',
+      message: `Order updated successfully`,
+      updatedOrders,
     });
   },
 );
