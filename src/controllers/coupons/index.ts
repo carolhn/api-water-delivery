@@ -19,7 +19,7 @@ export const createCoupon = asyncHandler(
     }
 
     const coupon = await Coupon.create({
-      code,
+      code: code?.toUpperCase(),
       startDate,
       endDate,
       discount,
@@ -42,6 +42,19 @@ export const getAllCoupons = asyncHandler(
       status: 'success',
       message: 'Coupons fetched successfully',
       coupons,
+    });
+  },
+);
+
+export const getSingleCoupon = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+    const coupon = await Coupon.findById(id);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Coupon fetched successfully',
+      coupon,
     });
   },
 );
