@@ -35,6 +35,14 @@ CouponSchema.virtual('isExpired').get(function () {
   return this.endDate.getTime() < Date.now();
 });
 
+CouponSchema.virtual('daysLeft').get(function () {
+  const daysLeft =
+    Math.ceil((this.endDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24)) +
+    '' +
+    ' Days left';
+  return daysLeft;
+});
+
 CouponSchema.pre('validate', function (next) {
   if (this.endDate < this.startDate) {
     next(new Error('End date cannot be less than the start date'));
@@ -62,6 +70,9 @@ CouponSchema.pre('validate', function (next) {
   }
   next();
 });
+
+CouponSchema.set('toJSON', { virtuals: true });
+CouponSchema.set('toObject', { virtuals: true });
 
 const Coupon = mongoose.model<ICoupon>('Coupon', CouponSchema);
 
