@@ -66,3 +66,16 @@ export const getAllOrders = asyncHandler(
     });
   },
 );
+
+export const getSingleOrder = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const { id } = req.params;
+    const order = await Order.findById(id);
+
+    res.status(200).json({
+      status: 'success',
+      message: `Order fetched successfully`,
+      order,
+    });
+  },
+);
