@@ -35,9 +35,12 @@ import {
   updatedOrder,
 } from './order';
 
+import { createCoupon } from './coupons';
+
 export {
   createBrand,
   createCategory,
+  createCoupon,
   createOrder,
   createProduct,
   createReview,
