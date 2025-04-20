@@ -1,11 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { Order, Product, User } from '../../model/index';
+import { OrderItem } from '../../types/order';
 import { createPaymentSession } from '../../utils/createPaymentSession';
 
 export const createOrder = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { orderItems, shippingAddress, totalPrice } = req.body;
+    const { orderItems, shippingAddress } = req.body;
+
+    let totalPrice = req.body.totalPrice;
+    if (!totalPrice) {
+      totalPrice = orderItems.reduce(
+        (total: number, item: OrderItem) => total + item.price * item.quantity,
+        0,
+      );
+    }
 
     const user = await User.findById(req.body.user.id);
 
