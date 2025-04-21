@@ -27,13 +27,10 @@ Uma API RESTful desenvolvida com o objetivo de atender um serviço de delivery d
 |               | GET    | `/categories/:id`            | Detalhes de uma categoria         |
 | 🏷️ Marcas     | GET    | `/brands/list`               | Lista todas as marcas             |
 |               | GET    | `/brands/:id`                | Detalhes de uma marca             |
-| ⭐ Avaliações | GET    | `/reviews/:productId`        | Lista avaliações de um produto    |
-| 📦 Pedidos    | GET    | `/orders/getAllOrders`       | Lista todos os pedidos            |
-|               | GET    | `/orders/status`             | Lista status disponíveis          |
+| 📦 Pedidos    | GET    | `/orders/list`               | Lista todos os pedidos            |
 |               | GET    | `/orders/getSingleOrder/:id` | Detalhes de um pedido             |
 | 🎟️ Cupons     | GET    | `/coupon/listCoupons`        | Lista todos os cupons             |
 |               | GET    | `/coupon/:id`                | Detalhes de um cupom              |
-| 👤 Usuários   | GET    | `/users/profile`             | Perfil do usuário autenticado     |
 
 ---
 

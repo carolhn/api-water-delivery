@@ -12,7 +12,7 @@ import isAdmin from '../../middlewares/isAdmin';
 const couponRoutes = Router();
 
 couponRoutes.post('/', isAuthenticated, isAdmin, createCoupon as any);
-couponRoutes.get('/listCoupons', getAllCoupons as any);
+couponRoutes.get('/list', getAllCoupons as any);
 couponRoutes.get('/:id', getSingleCoupon as any);
 couponRoutes.put('/:id', isAuthenticated, isAdmin, updatedCoupon as any);
 couponRoutes.delete('/:id', isAuthenticated, isAdmin, deleteCoupon as any);

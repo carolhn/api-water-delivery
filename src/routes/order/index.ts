@@ -11,7 +11,7 @@ import { isAuthenticated } from '../../middlewares/auth';
 const orderRoutes = Router();
 
 orderRoutes.post('/create', isAuthenticated, createOrder as any);
-orderRoutes.get('/getAllOrders', getAllOrders as any);
+orderRoutes.get('/list', getAllOrders as any);
 orderRoutes.get('/getSingleOrder/:id', getSingleOrder as any);
 orderRoutes.put('/updateOrder/:id', isAuthenticated, updatedOrder as any);
 orderRoutes.get('/status', isAuthenticated, getOrderStatus as any);
