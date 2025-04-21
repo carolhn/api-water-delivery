@@ -11,8 +11,8 @@ export const createOrder = asyncHandler(
 
     const user = await User.findById(req.body.user.id);
 
-    if (!user?.isShippingAddress) {
-      throw new Error('Please provide Shipping address');
+    if (!shippingAddress || !shippingAddress.address || !shippingAddress.city) {
+      throw new Error('Please provide a valid Shipping address');
     }
 
     const totalPrice = orderItems.reduce(
@@ -62,13 +62,11 @@ export const createOrder = asyncHandler(
 
     const sessionUrl = await createPaymentSession(orderItems);
 
-    res.send({ url: sessionUrl });
-
     res.status(201).json({
       status: 'success',
       message: 'Order created successfully',
       order: newOrder,
-      user,
+      paymentSessionUrl: sessionUrl,
     });
   },
 );
