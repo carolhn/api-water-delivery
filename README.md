@@ -2,7 +2,11 @@
 
 Uma API RESTful desenvolvida com o objetivo de atender um serviço de delivery de água, unindo aprendizado prático com a resolução de um problema real.
 
----
+<p align="center">
+  <img src="https://img.shields.io/badge/status-online-brightgreen" />
+  <img src="https://img.shields.io/badge/Node.js-22.x-blue" />
+  <img src="https://img.shields.io/badge/license-MIT-green" />
+</p>
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -13,7 +17,21 @@ Uma API RESTful desenvolvida com o objetivo de atender um serviço de delivery d
 - **Npm**
 - **Stripe**
 
----
+## Instalação Local:
+
+Para rodar a aplicação em sua maquina.
+
+1. Clone o repositorio. Use o comando:</br>
+   <code>git clone git@github.com:carolhn/api-water-delivery.git</code></br>
+
+2. Entre na pasta do repositório que você acabou de clonar:</br>
+   <code>cd api-water-delivery</code>
+
+3. Instale as dependências</br>
+   <code>npm install</code>
+
+4. Comando para executar a api</br>
+   <code>npm start</code>
 
 ## 📌 Endpoints Disponíveis
 
@@ -34,19 +52,11 @@ Uma API RESTful desenvolvida com o objetivo de atender um serviço de delivery d
 
 ---
 
-### 🔍 Exemplo
+### 🔍 Exemplo de uso
 
 ```
 https://e-commerce-tlsd.onrender.com/api/v1/products/list
 ```
-
----
-
-## 🌐 Deploy
-
-A API está disponível para acesso público:
-
-🔗 [Base URL](https://e-commerce-tlsd.onrender.com/api/v1)
 
 ---
 
