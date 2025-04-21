@@ -115,3 +115,45 @@ export const updatedOrder = asyncHandler(
     });
   },
 );
+
+export const getOrderStatus = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const orders = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          minimumSale: { $min: '$totalPrice' },
+          maxSale: { $max: '$totalPrice' },
+          averageSale: { $avg: '$totalPrice' },
+          totalSales: { $sum: '$totalPrice' },
+        },
+      },
+    ]);
+
+    const date = new Date();
+    const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+    const saleToday = await Order.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: today,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalSales: { $sum: '$totalPrice' },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      message: `Sales of orders`,
+      orders,
+      saleToday,
+    });
+  },
+);
