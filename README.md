@@ -19,18 +19,18 @@ Uma API RESTful desenvolvida com o objetivo de atender um serviço de delivery d
 
 > **Base URL:** `https://e-commerce-tlsd.onrender.com/api/v1`
 
-| Recurso       | Método | Endpoint                     | Descrição                         |
-| ------------- | ------ | ---------------------------- | --------------------------------- |
-| 🛍️ Produtos   | GET    | `/products/list`             | Lista todos os produtos           |
-|               | GET    | `/products/:id`              | Detalhes de um produto específico |
-| 📂 Categorias | GET    | `/categories/list`           | Lista todas as categorias         |
-|               | GET    | `/categories/:id`            | Detalhes de uma categoria         |
-| 🏷️ Marcas     | GET    | `/brands/list`               | Lista todas as marcas             |
-|               | GET    | `/brands/:id`                | Detalhes de uma marca             |
-| 📦 Pedidos    | GET    | `/orders/list`               | Lista todos os pedidos            |
-|               | GET    | `/orders/getSingleOrder/:id` | Detalhes de um pedido             |
-| 🎟️ Cupons     | GET    | `/coupon/listCoupons`        | Lista todos os cupons             |
-|               | GET    | `/coupon/:id`                | Detalhes de um cupom              |
+| Recurso       | Método | Endpoint           | Descrição                         |
+| ------------- | ------ | ------------------ | --------------------------------- |
+| 🛍️ Produtos   | GET    | `/products/list`   | Lista todos os produtos           |
+|               | GET    | `/products/:id`    | Detalhes de um produto específico |
+| 📂 Categorias | GET    | `/categories/list` | Lista todas as categorias         |
+|               | GET    | `/categories/:id`  | Detalhes de uma categoria         |
+| 🏷️ Marcas     | GET    | `/brands/list`     | Lista todas as marcas             |
+|               | GET    | `/brands/:id`      | Detalhes de uma marca             |
+| 📦 Pedidos    | GET    | `/orders/list`     | Lista todos os pedidos            |
+|               | GET    | `/orders/:id`      | Detalhes de um pedido             |
+| 🎟️ Cupons     | GET    | `/coupon/list`     | Lista todos os cupons             |
+|               | GET    | `/coupon/:id`      | Detalhes de um cupom              |
 
 ---
 
