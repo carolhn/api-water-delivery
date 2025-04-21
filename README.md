@@ -1,32 +1,58 @@
-# E-commerce Project
+# 💧 API Disk Água
 
-This is an e-commerce web application built with **React**. It provides features for browsing, searching, and purchasing products with a focus on user experience.
+Uma API RESTful desenvolvida com o objetivo de atender um serviço de delivery de água, unindo aprendizado prático com a resolução de um problema real.
 
-<details>
-<summary>Development Standards.</summary>
+---
 
-#### 1.1 Branch Naming
+## 🚀 Tecnologias Utilizadas
 
-Format: type/EC-ID
+- **Node.js** com **JavaScript** e **TypeScript**
+- **Express**
+- **Sequelize**
+- **MongoDB**
+- **Npm**
+- **Stripe**
 
-```sh
-Example: feature/EC-000
+---
+
+## 📌 Endpoints Disponíveis
+
+> **Base URL:** `https://e-commerce-tlsd.onrender.com/api/v1`
+
+| Recurso       | Método | Endpoint                     | Descrição                         |
+| ------------- | ------ | ---------------------------- | --------------------------------- |
+| 🛍️ Produtos   | GET    | `/products/list`             | Lista todos os produtos           |
+|               | GET    | `/products/:id`              | Detalhes de um produto específico |
+| 📂 Categorias | GET    | `/categories/list`           | Lista todas as categorias         |
+|               | GET    | `/categories/:id`            | Detalhes de uma categoria         |
+| 🏷️ Marcas     | GET    | `/brands/list`               | Lista todas as marcas             |
+|               | GET    | `/brands/:id`                | Detalhes de uma marca             |
+| ⭐ Avaliações | GET    | `/reviews/:productId`        | Lista avaliações de um produto    |
+| 📦 Pedidos    | GET    | `/orders/getAllOrders`       | Lista todos os pedidos            |
+|               | GET    | `/orders/status`             | Lista status disponíveis          |
+|               | GET    | `/orders/getSingleOrder/:id` | Detalhes de um pedido             |
+| 🎟️ Cupons     | GET    | `/coupon/listCoupons`        | Lista todos os cupons             |
+|               | GET    | `/coupon/:id`                | Detalhes de um cupom              |
+| 👤 Usuários   | GET    | `/users/profile`             | Perfil do usuário autenticado     |
+
+---
+
+### 🔍 Exemplo
+
+```
+https://e-commerce-tlsd.onrender.com/api/v1/products/list
 ```
 
-#### 1.2 Commit Message
+---
 
-Format: type: [EC-ID] message
+## 🌐 Deploy
 
-```sh
-Example: feat: [EC-000] Add user registration
-```
+A API está disponível para acesso público:
 
-#### 1.3 Pull Request (PR) Naming
+🔗 [Base URL](https://e-commerce-tlsd.onrender.com/api/v1)
 
-Format: type: [EC-ID] message
+---
 
-```sh
-Example: feat: [EC-000] Implement login page
-```
+## 🤝 Contribuição
 
-</details>
+Sinta-se à vontade para abrir issues ou contribuir com melhorias!
