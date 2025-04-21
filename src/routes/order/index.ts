@@ -2,6 +2,7 @@ import { Router } from 'express';
 import {
   createOrder,
   getAllOrders,
+  getOrderStatus,
   getSingleOrder,
   updatedOrder,
 } from '../../controllers/index';
@@ -13,5 +14,6 @@ orderRoutes.post('/create', isAuthenticated, createOrder as any);
 orderRoutes.get('/getAllOrders', isAuthenticated, getAllOrders as any);
 orderRoutes.get('/getSingleOrder/:id', isAuthenticated, getSingleOrder as any);
 orderRoutes.put('/updateOrder/:id', isAuthenticated, updatedOrder as any);
+orderRoutes.get('/status', isAuthenticated, getOrderStatus as any);
 
 export default orderRoutes;

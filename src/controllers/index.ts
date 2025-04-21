@@ -31,6 +31,7 @@ import { createReview } from './review';
 import {
   createOrder,
   getAllOrders,
+  getOrderStatus,
   getSingleOrder,
   updatedOrder,
 } from './order';
@@ -60,6 +61,7 @@ export {
   getAllOrders,
   getBrandById,
   getCategoryById,
+  getOrderStatus,
   getProductById,
   getProducts,
   getSingleCoupon,
