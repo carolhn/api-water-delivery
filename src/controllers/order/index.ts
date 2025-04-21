@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import asyncHandler from 'express-async-handler';
 import { Order, Product, User } from '../../model/index';
+import { applyCouponDiscount } from '../../utils/applyCouponDiscount';
 import { createPaymentSession } from '../../utils/createPaymentSession';
 
 export const createOrder = asyncHandler(
   async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    const { orderItems, shippingAddress, totalPrice } = req.body;
+    const { orderItems, shippingAddress } = req.body;
+    const { coupon } = req.query;
 
     const user = await User.findById(req.body.user.id);
 
@@ -13,15 +15,29 @@ export const createOrder = asyncHandler(
       throw new Error('Please provide Shipping address');
     }
 
-    if (!orderItems || orderItems.length <= 0) {
-      throw new Error('No order items');
+    const totalPrice = orderItems.reduce(
+      (acc: number, item: any) => acc + item.price * item.quantity,
+      0,
+    );
+
+    let discount = 0;
+    let finalPrice = totalPrice;
+
+    if (coupon) {
+      const discountResult = await applyCouponDiscount(
+        coupon.toString(),
+        totalPrice,
+      );
+      discount = discountResult.discount;
+      finalPrice = discountResult.finalPrice;
     }
 
     const newOrder = await Order.create({
       user: user?._id,
       orderItems,
       shippingAddress,
-      totalPrice,
+      discount,
+      totalPrice: finalPrice,
     });
 
     const productIds = orderItems.map((item: any) => item._id);
@@ -45,12 +61,13 @@ export const createOrder = asyncHandler(
     await user?.save();
 
     const sessionUrl = await createPaymentSession(orderItems);
+
     res.send({ url: sessionUrl });
 
     res.status(201).json({
       status: 'success',
-      message: `Order created successfully`,
-      orderItems,
+      message: 'Order created successfully',
+      order: newOrder,
       user,
     });
   },

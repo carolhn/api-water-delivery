@@ -31,6 +31,7 @@ export const createPaymentSession = async (orderItems: any[]) => {
     payment_method_types: ['card'],
     success_url: 'http://localhost:3000/success',
     cancel_url: 'http://localhost:3000/cancel',
+    automatic_tax: { enabled: false },
   });
   return session.url;
 };
